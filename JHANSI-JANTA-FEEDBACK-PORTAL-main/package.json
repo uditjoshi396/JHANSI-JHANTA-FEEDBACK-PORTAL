@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "build": "node generate_ppt.js"
+  },
+  "dependencies": {
+    "inquirer": "^13.0.1",
+    "pptxgenjs": "^4.0.1"
+  }
+}
