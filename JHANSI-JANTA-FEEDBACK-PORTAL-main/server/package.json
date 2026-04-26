@@ -27,5 +27,8 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
+  },
+  "overrides": {
+    "passport": "^0.7.0"
   }
 }

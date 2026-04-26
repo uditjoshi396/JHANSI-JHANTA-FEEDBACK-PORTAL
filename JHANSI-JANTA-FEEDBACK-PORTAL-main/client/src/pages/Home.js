@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import Logo from '../components/Logo';
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Logo from "../components/Logo";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -8,22 +8,25 @@ export default function Home() {
   const heroSlides = [
     {
       title: "Your Voice Matters",
-      subtitle: "Submit grievances, track progress, and help us build a better community.",
+      subtitle:
+        "Submit grievances, track progress, and help us build a better community.",
       cta: "Get Started",
-      link: "/register"
+      link: "/register",
     },
     {
       title: "Transparent Governance",
-      subtitle: "Real-time updates on grievance resolution with complete transparency.",
+      subtitle:
+        "Real-time updates on grievance resolution with complete transparency.",
       cta: "Learn More",
-      link: "/contact"
+      link: "/contact",
     },
     {
       title: "AI-Powered Assistance",
-      subtitle: "Get intelligent suggestions and faster resolution with our AI chatbot.",
+      subtitle:
+        "Get intelligent suggestions and faster resolution with our AI chatbot.",
       cta: "Try AI Chat",
-      link: "/dashboard"
-    }
+      link: "/dashboard",
+    },
   ];
 
   useEffect(() => {
@@ -42,11 +45,23 @@ export default function Home() {
             <Logo />
           </Link>
           <ul className="nav-links">
-            <li><a href="#features">Features</a></li>
-            <li><a href="#stats">Statistics</a></li>
-            <li><Link to="/contact">Contact</Link></li>
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/register" className="cta-link">Register</Link></li>
+            <li>
+              <a href="#features">Features</a>
+            </li>
+            <li>
+              <a href="#stats">Statistics</a>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/register" className="cta-link">
+                Register
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>
@@ -58,7 +73,7 @@ export default function Home() {
             {heroSlides.map((slide, index) => (
               <div
                 key={index}
-                className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
+                className={`hero-slide ${index === currentSlide ? "active" : ""}`}
               >
                 <div className="container">
                   <div className="hero-content">
@@ -69,7 +84,9 @@ export default function Home() {
                         {slide.cta}
                         <span className="btn-arrow">→</span>
                       </Link>
-                      <Link to="/login" className="btn btn-secondary">Sign In</Link>
+                      <Link to="/login" className="btn btn-secondary">
+                        Sign In
+                      </Link>
                     </div>
                   </div>
                   <div className="hero-visual">
@@ -96,7 +113,7 @@ export default function Home() {
             {heroSlides.map((_, index) => (
               <button
                 key={index}
-                className={`indicator ${index === currentSlide ? 'active' : ''}`}
+                className={`indicator ${index === currentSlide ? "active" : ""}`}
                 onClick={() => setCurrentSlide(index)}
               />
             ))}
@@ -110,51 +127,88 @@ export default function Home() {
           <div className="section-header">
             <h2 className="fade-in-up">Why Choose Our Portal?</h2>
             <p className="section-subtitle fade-in-up">
-              Discover the features that make citizen engagement simple, secure, and effective.
+              Discover the features that make citizen engagement simple, secure,
+              and effective.
             </p>
           </div>
           <div className="features-grid">
-            <Link to="/features/easy-submission" className="feature-card fade-in-up">
+            <Link
+              to="/features/easy-submission"
+              className="feature-card fade-in-up"
+            >
               <div className="feature-icon-wrapper">
                 <span className="feature-icon">📝</span>
               </div>
               <h3>Easy Submission</h3>
-              <p>Submit your grievances quickly and securely with our user-friendly interface and AI assistance.</p>
+              <p>
+                Submit your grievances quickly and securely with our
+                user-friendly interface and AI assistance.
+              </p>
             </Link>
-            <Link to="/features/real-time-tracking" className="feature-card fade-in-up">
+            <Link
+              to="/features/real-time-tracking"
+              className="feature-card fade-in-up"
+            >
               <div className="feature-icon-wrapper">
                 <span className="feature-icon">📊</span>
               </div>
               <h3>Real-Time Tracking</h3>
-              <p>Monitor the status of your submissions in real-time with detailed updates and progress notifications.</p>
+              <p>
+                Monitor the status of your submissions in real-time with
+                detailed updates and progress notifications.
+              </p>
             </Link>
-            <Link to="/features/secure-private" className="feature-card fade-in-up">
+            <Link
+              to="/features/secure-private"
+              className="feature-card fade-in-up"
+            >
               <div className="feature-icon-wrapper">
                 <span className="feature-icon">🔒</span>
               </div>
               <h3>Secure & Private</h3>
-              <p>Your data is protected with industry-standard security measures and privacy-first approach.</p>
+              <p>
+                Your data is protected with industry-standard security measures
+                and privacy-first approach.
+              </p>
             </Link>
-            <Link to="/features/ai-powered-support" className="feature-card fade-in-up">
+            <Link
+              to="/features/ai-powered-support"
+              className="feature-card fade-in-up"
+            >
               <div className="feature-icon-wrapper">
                 <span className="feature-icon">🤖</span>
               </div>
               <h3>AI-Powered Support</h3>
-              <p>Get intelligent suggestions, sentiment analysis, and faster resolution with our AI chatbot.</p>
+              <p>
+                Get intelligent suggestions, sentiment analysis, and faster
+                resolution with our AI chatbot.
+              </p>
             </Link>
-            <Link to="/features/mobile-optimized" className="feature-card fade-in-up">
+            <Link
+              to="/features/mobile-optimized"
+              className="feature-card fade-in-up"
+            >
               <div className="feature-icon-wrapper">
                 <span className="feature-icon">📱</span>
               </div>
               <h3>Mobile Optimized</h3>
-              <p>Access the portal from any device with our responsive design and mobile-first approach.</p>
+              <p>
+                Access the portal from any device with our responsive design and
+                mobile-first approach.
+              </p>
             </Link>
-            <Link to="/features/fast-resolution" className="feature-card fade-in-up">
+            <Link
+              to="/features/fast-resolution"
+              className="feature-card fade-in-up"
+            >
               <div className="feature-icon-wrapper">
                 <span className="feature-icon">⚡</span>
               </div>
               <h3>Fast Resolution</h3>
-              <p>Experience quick response times and efficient grievance resolution with automated workflows.</p>
+              <p>
+                Experience quick response times and efficient grievance
+                resolution with automated workflows.
+              </p>
             </Link>
           </div>
         </div>
@@ -166,7 +220,8 @@ export default function Home() {
           <div className="section-header">
             <h2 className="fade-in-up">Our Impact</h2>
             <p className="section-subtitle fade-in-up">
-              Real numbers that demonstrate our commitment to citizen satisfaction and efficient governance.
+              Real numbers that demonstrate our commitment to citizen
+              satisfaction and efficient governance.
             </p>
           </div>
           <div className="stats-grid">
@@ -175,7 +230,7 @@ export default function Home() {
               <h3>10,000+</h3>
               <p>Grievances Resolved</p>
               <div className="stat-bar">
-                <div className="stat-fill" style={{width: '85%'}}></div>
+                <div className="stat-fill" style={{ width: "85%" }}></div>
               </div>
             </div>
             <div className="stat-item fade-in-up">
@@ -183,7 +238,7 @@ export default function Home() {
               <h3>95%</h3>
               <p>Satisfaction Rate</p>
               <div className="stat-bar">
-                <div className="stat-fill" style={{width: '95%'}}></div>
+                <div className="stat-fill" style={{ width: "95%" }}></div>
               </div>
             </div>
             <div className="stat-item fade-in-up">
@@ -191,7 +246,7 @@ export default function Home() {
               <h3>24/7</h3>
               <p>Support Available</p>
               <div className="stat-bar">
-                <div className="stat-fill" style={{width: '100%'}}></div>
+                <div className="stat-fill" style={{ width: "100%" }}></div>
               </div>
             </div>
             <div className="stat-item fade-in-up">
@@ -199,7 +254,7 @@ export default function Home() {
               <h3>50+</h3>
               <p>Partner Organizations</p>
               <div className="stat-bar">
-                <div className="stat-fill" style={{width: '70%'}}></div>
+                <div className="stat-fill" style={{ width: "70%" }}></div>
               </div>
             </div>
           </div>
@@ -218,7 +273,10 @@ export default function Home() {
           <div className="testimonials-grid">
             <div className="testimonial-card fade-in-up">
               <div className="testimonial-content">
-                <p>"The portal made it incredibly easy to report a street light issue in my neighborhood. It was resolved within 48 hours!"</p>
+                <p>
+                  "The portal made it incredibly easy to report a street light
+                  issue in my neighborhood. It was resolved within 48 hours!"
+                </p>
                 <div className="testimonial-author">
                   <div className="author-avatar">👩‍💼</div>
                   <div className="author-info">
@@ -230,7 +288,10 @@ export default function Home() {
             </div>
             <div className="testimonial-card fade-in-up">
               <div className="testimonial-content">
-                <p>"The AI chatbot helped me articulate my grievance better and suggested the right department. Excellent service!"</p>
+                <p>
+                  "The AI chatbot helped me articulate my grievance better and
+                  suggested the right department. Excellent service!"
+                </p>
                 <div className="testimonial-author">
                   <div className="author-avatar">👨‍🏫</div>
                   <div className="author-info">
@@ -242,7 +303,10 @@ export default function Home() {
             </div>
             <div className="testimonial-card fade-in-up">
               <div className="testimonial-content">
-                <p>"Real-time tracking and transparent updates keep me informed. This is how governance should work."</p>
+                <p>
+                  "Real-time tracking and transparent updates keep me informed.
+                  This is how governance should work."
+                </p>
                 <div className="testimonial-author">
                   <div className="author-avatar">👩‍⚖️</div>
                   <div className="author-info">
@@ -263,7 +327,8 @@ export default function Home() {
             <div className="touch-text">
               <h2 className="fade-in-up">Ready to Make Your Voice Heard?</h2>
               <p className="fade-in-up">
-                Join thousands of citizens who are already using our platform to create positive change in their communities.
+                Join thousands of citizens who are already using our platform to
+                create positive change in their communities.
               </p>
               <div className="touch-features fade-in-up">
                 <div className="touch-feature">
@@ -298,7 +363,10 @@ export default function Home() {
       <footer className="footer">
         <div className="container">
           <div className="footer-content">
-            <p>&copy; 2025 Janata Feedback Portal. All rights reserved.</p>
+            <p>
+              &copy; 2026 Jhansi Janata Feedback Portal. All rights reserved.
+            </p>
+
             <div className="footer-links">
               <a href="#privacy">Privacy Policy</a>
               <a href="#terms">Terms of Service</a>

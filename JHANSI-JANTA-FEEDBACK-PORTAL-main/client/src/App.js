@@ -1,9 +1,15 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import Home from './pages/Home';
+import UnifiedAuth from './pages/UnifiedAuth';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
 import Dashboard from './pages/Dashboard';
+import Admin from './pages/Admin';
+import Officer from './pages/Officer';
+import Transparency from './pages/Transparency';
+import TransparencyDashboard from './pages/TransparencyDashboard';
 import Statistics from './pages/Statistics';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
@@ -14,9 +20,15 @@ import SecurePrivate from './pages/SecurePrivate';
 import AIPoweredSupport from './pages/AIPoweredSupport';
 import MobileOptimized from './pages/MobileOptimized';
 import FastResolution from './pages/FastResolution';
+import AccountGenerator from './pages/AccountGenerator';
 import ThemeToggle from './components/ThemeToggle';
 import AIChatbot from './components/AIChatbot';
+import HomeButton from './components/HomeButton';
 import './App.css';
+import './styles/Auth.css';
+import './styles/Modal.css';
+import './styles/TwoFactor.css';
+import './styles/Toast.css';
 
 function App(){
   // Security: Auto-logout on app start if token is expired
@@ -73,12 +85,26 @@ function App(){
   return (
     <BrowserRouter>
       <ThemeToggle />
+      <HomeButton />
       <AIChatbot />
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='/login' element={<Login/>} />
-        <Route path='/register' element={<Register/>} />
+        <Route path='/auth' element={<UnifiedAuth/>} />
+        <Route path='/login' element={<UnifiedAuth/>} />
+        <Route path='/register' element={<UnifiedAuth/>} />
+        <Route path='/citizen-login' element={<Login/>} />
+        <Route path='/citizen-register' element={<Register/>} />
+        <Route path='/forgot-password' element={<ForgotPassword/>} />
+        <Route path='/admin-login' element={<UnifiedAuth/>} />
+        <Route path='/admin-register' element={<UnifiedAuth/>} />
+        <Route path='/officer-login' element={<UnifiedAuth/>} />
+        <Route path='/officer-register' element={<UnifiedAuth/>} />
         <Route path='/dashboard' element={<Dashboard/>} />
+        <Route path='/admin' element={<Admin/>} />
+        <Route path='/officer' element={<Officer/>} />
+        <Route path='/accounts' element={<AccountGenerator/>} />
+        <Route path='/transparency' element={<Transparency/>} />
+        <Route path='/transparency-center' element={<TransparencyDashboard/>} />
         <Route path='/statistics' element={<Statistics/>} />
         <Route path='/privacy' element={<PrivacyPolicy/>} />
         <Route path='/terms' element={<TermsOfService/>} />
