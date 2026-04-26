@@ -1,0 +1,31 @@
+# Server files (not needed for frontend deployment)
+JHANSI-JANTA-FEEDBACK-PORTAL-main/server/
+server/
+
+# Docs and assets
+JHANSI-JANTA-FEEDBACK-PORTAL-main/PROJECT REFERENCE S/
+PROJECT REFERENCE S/
+*.md
+*.docx
+*.pptx
+*.jpeg
+*.jpg
+*.png
+
+# Scripts
+*.bat
+*.sh
+JHANSI-JANTA-FEEDBACK-PORTAL-main/bin/
+bin/
+
+# Tests
+TEST_API.js
+test-*.js
+smoke-test.ps1
+playground-*.js
+
+# Misc
+.git/
+.gitignore
+TODO*.md
+
