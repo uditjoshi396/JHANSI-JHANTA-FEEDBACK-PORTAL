@@ -12,8 +12,7 @@ import {
   Square
 } from 'lucide-react';
 import '../styles/AIChatbot.css';
-
-const API_BASE = 'http://localhost:5000/api/grievances';
+import { API_BASE } from '../config';
 
 const createWelcomeMessage = () => ({
   id: 'welcome',

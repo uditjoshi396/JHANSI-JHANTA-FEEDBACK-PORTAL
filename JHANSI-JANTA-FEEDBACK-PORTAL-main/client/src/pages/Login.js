@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Logo from '../components/Logo';
-import Toast from '../components/Toast';
-import TwoFactorAuth from '../components/TwoFactorAuth';
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_BASE } from "../config";
+import Logo from "../components/Logo";
+import Toast from "../components/Toast";
+import TwoFactorAuth from "../components/TwoFactorAuth";
 import {
   sanitizeInput,
   isValidEmail,
@@ -12,12 +13,12 @@ import {
   generateDeviceFingerprint,
   saveAuthData,
   getAuthData,
-  logLoginAttempt
-} from '../utils/authUtils';
+  logLoginAttempt,
+} from "../utils/authUtils";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +27,7 @@ export default function Login() {
   const [lockoutTime, setLockoutTime] = useState(0);
   const [toast, setToast] = useState(null);
   const [requires2FA, setRequires2FA] = useState(false);
-  const [tempEmail, setTempEmail] = useState('');
+  const [tempEmail, setTempEmail] = useState("");
   const [sessionTimeout, setSessionTimeout] = useState(null);
   const [deviceFingerprint, setDeviceFingerprint] = useState(null);
   const navigate = useNavigate();
@@ -44,39 +45,39 @@ export default function Login() {
   useEffect(() => {
     const authData = getAuthData();
     if (authData) {
-      navigate('/dashboard');
+      navigate("/dashboard");
     }
 
     // Check for OAuth callback
     const urlParams = new URLSearchParams(window.location.search);
-    const oauthToken = urlParams.get('token');
+    const oauthToken = urlParams.get("token");
     const authProvider =
-      urlParams.get('google') ||
-      urlParams.get('facebook') ||
-      urlParams.get('twitter') ||
-      urlParams.get('instagram');
+      urlParams.get("google") ||
+      urlParams.get("facebook") ||
+      urlParams.get("twitter") ||
+      urlParams.get("instagram");
 
     if (oauthToken && authProvider) {
       try {
-        const payload = JSON.parse(atob(oauthToken.split('.')[1]));
+        const payload = JSON.parse(atob(oauthToken.split(".")[1]));
         if (payload && payload.id) {
           saveAuthData(oauthToken, {
             id: payload.id,
             name: payload.name,
             email: payload.email,
-            role: payload.role
+            role: payload.role,
           });
           setToast({
             message: `Successfully logged in with ${authProvider}`,
-            type: 'success'
+            type: "success",
           });
-          setTimeout(() => navigate('/dashboard'), 1500);
+          setTimeout(() => navigate("/dashboard"), 1500);
         }
       } catch (error) {
         console.error(`${authProvider} auth error:`, error);
         setToast({
           message: `${authProvider.charAt(0).toUpperCase() + authProvider.slice(1)} authentication failed.`,
-          type: 'error'
+          type: "error",
         });
       }
       window.history.replaceState({}, document.title, window.location.pathname);
@@ -108,18 +109,21 @@ export default function Login() {
     let inactivityTimer;
     const resetTimer = () => {
       clearTimeout(inactivityTimer);
-      inactivityTimer = setTimeout(() => {
-        setSessionTimeout(true);
-      }, 15 * 60 * 1000); // 15 minutes
+      inactivityTimer = setTimeout(
+        () => {
+          setSessionTimeout(true);
+        },
+        15 * 60 * 1000,
+      ); // 15 minutes
     };
 
-    window.addEventListener('mousemove', resetTimer);
-    window.addEventListener('keypress', resetTimer);
+    window.addEventListener("mousemove", resetTimer);
+    window.addEventListener("keypress", resetTimer);
     resetTimer();
 
     return () => {
-      window.removeEventListener('mousemove', resetTimer);
-      window.removeEventListener('keypress', resetTimer);
+      window.removeEventListener("mousemove", resetTimer);
+      window.removeEventListener("keypress", resetTimer);
       clearTimeout(inactivityTimer);
     };
   }, []);
@@ -127,7 +131,7 @@ export default function Login() {
   // Security: Clear sensitive data on unmount
   useEffect(() => {
     return () => {
-      setPassword('');
+      setPassword("");
     };
   }, []);
 
@@ -140,8 +144,8 @@ export default function Login() {
           lockoutTime % 60
         )
           .toString()
-          .padStart(2, '0')}`,
-        type: 'warning'
+          .padStart(2, "0")}`,
+        type: "warning",
       });
       return;
     }
@@ -150,14 +154,17 @@ export default function Login() {
 
     // Validation
     if (!isValidEmail(sanitizedEmail)) {
-      setToast({ message: 'Please enter a valid email address', type: 'error' });
+      setToast({
+        message: "Please enter a valid email address",
+        type: "error",
+      });
       return;
     }
 
     if (!isValidPassword(password)) {
       setToast({
-        message: 'Password must be 8-128 characters',
-        type: 'error'
+        message: "Password must be 8-128 characters",
+        type: "error",
       });
       return;
     }
@@ -166,31 +173,31 @@ export default function Login() {
 
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/auth/login',
+        `${API_BASE}/api/auth/login`,
         {
           email: sanitizedEmail,
           password,
           deviceFingerprint,
-          rememberMe
+          rememberMe,
         },
         {
           timeout: 10000,
           headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
-          }
-        }
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        },
       );
 
       // Check if 2FA is required
       if (res.data.requires2FA) {
         setRequires2FA(true);
         setTempEmail(sanitizedEmail);
-        setToast({ message: 'Verify your identity with 2FA', type: 'info' });
+        setToast({ message: "Verify your identity with 2FA", type: "info" });
       } else {
         // Validate response
         if (!res.data.token || !res.data.user) {
-          throw new Error('Invalid response from server');
+          throw new Error("Invalid response from server");
         }
 
         saveAuthData(res.data.token, res.data.user);
@@ -199,16 +206,20 @@ export default function Login() {
         // Log successful login
         await logLoginAttempt(sanitizedEmail, true);
 
-        setToast({ message: 'Login successful!', type: 'success' });
-        setTimeout(() => navigate('/dashboard'), 1000);
+        setToast({ message: "Login successful!", type: "success" });
+        setTimeout(() => navigate("/dashboard"), 1000);
       }
     } catch (err) {
       const message = getAuthErrorMessage(err);
-      setToast({ message, type: 'error' });
+      setToast({ message, type: "error" });
       setLoginAttempts((prev) => prev + 1);
 
       // Log failed login attempt
-      await logLoginAttempt(email, false, err.response?.data?.error || err.message);
+      await logLoginAttempt(
+        email,
+        false,
+        err.response?.data?.error || err.message,
+      );
     } finally {
       setLoading(false);
     }
@@ -216,19 +227,19 @@ export default function Login() {
 
   const handle2FAVerified = (data) => {
     if (!data.token || !data.user) {
-      setToast({ message: 'Invalid response from server', type: 'error' });
+      setToast({ message: "Invalid response from server", type: "error" });
       return;
     }
 
     saveAuthData(data.token, data.user);
     setLoginAttempts(0);
-    setToast({ message: '2FA verified! Redirecting...', type: 'success' });
-    setTimeout(() => navigate('/dashboard'), 1000);
+    setToast({ message: "2FA verified! Redirecting...", type: "success" });
+    setTimeout(() => navigate("/dashboard"), 1000);
   };
 
   const handle2FACancel = () => {
     setRequires2FA(false);
-    setTempEmail('');
+    setTempEmail("");
   };
 
   // Two-Factor Authentication view
@@ -297,7 +308,7 @@ export default function Login() {
               <div className="input-wrapper">
                 <input
                   id="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -311,7 +322,7 @@ export default function Login() {
                   onClick={() => setShowPassword(!showPassword)}
                   disabled={loading}
                 >
-                  {showPassword ? '🙈' : '👁️'}
+                  {showPassword ? "🙈" : "👁️"}
                 </button>
               </div>
             </div>
@@ -328,17 +339,21 @@ export default function Login() {
               </label>
             </div>
 
-            <button type="submit" className="auth-btn" disabled={loading || isLocked}>
+            <button
+              type="submit"
+              className="auth-btn"
+              disabled={loading || isLocked}
+            >
               {isLocked ? (
                 `Locked (${Math.floor(lockoutTime / 60)}:${(lockoutTime % 60)
                   .toString()
-                  .padStart(2, '0')})`
+                  .padStart(2, "0")})`
               ) : loading ? (
                 <>
                   <span className="spinner"></span> Signing In...
                 </>
               ) : (
-                'Sign In'
+                "Sign In"
               )}
             </button>
           </form>
@@ -353,7 +368,7 @@ export default function Login() {
                 type="button"
                 className="social-auth-btn google-btn"
                 onClick={() =>
-                  (window.location.href = 'http://localhost:5000/api/auth/google')
+                  (window.location.href = `${API_BASE}/api/auth/google`)
                 }
                 disabled={loading}
               >
@@ -371,7 +386,7 @@ export default function Login() {
                 type="button"
                 className="social-auth-btn facebook-btn"
                 onClick={() =>
-                  (window.location.href = 'http://localhost:5000/api/auth/facebook')
+                  (window.location.href = `${API_BASE}/api/auth/facebook`)
                 }
                 disabled={loading}
               >
@@ -389,7 +404,7 @@ export default function Login() {
                 type="button"
                 className="social-auth-btn twitter-btn"
                 onClick={() =>
-                  (window.location.href = 'http://localhost:5000/api/auth/twitter')
+                  (window.location.href = `${API_BASE}/api/auth/twitter`)
                 }
                 disabled={loading}
               >
@@ -405,7 +420,7 @@ export default function Login() {
 
           <div className="auth-footer">
             <p>
-              Don't have an account?{' '}
+              Don't have an account?{" "}
               <Link to="/register" className="auth-link">
                 Create one here
               </Link>

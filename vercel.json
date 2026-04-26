@@ -1,10 +1,13 @@
 {
-  "buildCommand": "cd JHANSI-JANTA-FEEDBACK-PORTAL-main/client && npm run build",
+  "buildCommand": "cd JHANSI-JANTA-FEEDBACK-PORTAL-main/client && npm install && npm run build",
   "outputDirectory": "JHANSI-JANTA-FEEDBACK-PORTAL-main/client/build",
   "installCommand": "cd JHANSI-JANTA-FEEDBACK-PORTAL-main/client && npm install",
   "framework": "create-react-app",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/(.*)",
+      "destination": "/JHANSI-JANTA-FEEDBACK-PORTAL-main/client/build/$1"
+    }
   ]
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Officer.css';
+import { API_BASE } from '../config';
 
 function Officer() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -49,7 +50,7 @@ function Officer() {
       }
 
       // Fetch assigned grievances (officer view)
-      const grievanceRes = await axios.get('http://localhost:5000/api/grievances/officer', {
+      const grievanceRes = await axios.get(`${API_BASE}/api/grievances/officer`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -105,7 +106,7 @@ function Officer() {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `http://localhost:5000/api/grievances/${grievanceId}/status`,
+        `${API_BASE}/api/grievances/${grievanceId}/status`,
         {
           status: newStatus,
           response: responseText,
@@ -377,7 +378,7 @@ function Officer() {
                     </button>
                     {grievance.attachment && (
                       <a
-                        href={`http://localhost:5000/uploads/${grievance.attachment}`}
+                        href={`${API_BASE}/uploads/${grievance.attachment}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="action-btn attachment-btn"

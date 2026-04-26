@@ -1,3 +1,4 @@
+import { API_BASE } from '../config';
 // Authentication Utility Functions
 
 /**
@@ -159,7 +160,7 @@ export const validateCaptcha = async (captchaToken) => {
   if (!captchaToken) return false;
   
   try {
-    const response = await fetch('http://localhost:5000/api/auth/verify-captcha', {
+    const response = await fetch(`${API_BASE}/api/auth/verify-captcha`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: captchaToken })
@@ -176,7 +177,7 @@ export const validateCaptcha = async (captchaToken) => {
  */
 export const checkEmailAvailability = async (email) => {
   try {
-    const response = await fetch('http://localhost:5000/api/auth/check-email', {
+    const response = await fetch(`${API_BASE}/api/auth/check-email`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
@@ -205,7 +206,7 @@ export const formatPhoneNumber = (phone) => {
  */
 export const verifyToken = async (token) => {
   try {
-    const response = await fetch('http://localhost:5000/api/auth/me', {
+    const response = await fetch(`${API_BASE}/api/auth/me`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return response.ok;
@@ -272,7 +273,7 @@ export const getAuthData = () => {
  */
 export const logLoginAttempt = async (email, success, errorMessage = null) => {
   try {
-    await fetch('http://localhost:5000/api/auth/log-attempt', {
+    await fetch(`${API_BASE}/api/auth/log-attempt`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

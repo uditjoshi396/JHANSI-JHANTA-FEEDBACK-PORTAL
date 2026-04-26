@@ -5,6 +5,7 @@ import Logo from '../components/Logo';
 import Toast from '../components/Toast';
 import TermsModal from '../components/TermsModal';
 import {
+import { API_BASE } from '../config';
   sanitizeInput,
   isValidName,
   isValidEmail,
@@ -93,7 +94,7 @@ export default function Register() {
       setEmailVerifying(true);
       try {
         const response = await axios.post(
-          'http://localhost:5000/api/auth/check-email',
+          `${API_BASE}/api/auth/check-email`,
           { email: email.toLowerCase() },
           { timeout: 5000 }
         );
@@ -210,7 +211,7 @@ export default function Register() {
         marketingOptIn
       };
 
-      await axios.post('http://localhost:5000/api/auth/register', sanitizedData, {
+      await axios.post(`${API_BASE}/api/auth/register`, sanitizedData, {
         timeout: 15000,
         headers: {
           'Content-Type': 'application/json',
@@ -346,7 +347,7 @@ export default function Register() {
                         type="button"
                         className="social-auth-btn google-btn"
                         onClick={() =>
-                          (window.location.href = 'http://localhost:5000/api/auth/google')
+                          (window.location.href = `${API_BASE}/api/auth/google`)
                         }
                         disabled={loading}
                       >

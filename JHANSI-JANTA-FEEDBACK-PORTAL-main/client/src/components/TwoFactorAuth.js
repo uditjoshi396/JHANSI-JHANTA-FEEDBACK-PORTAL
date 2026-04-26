@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/TwoFactor.css';
+import { API_BASE } from '../config';
 
 export default function TwoFactorAuth({ email, onVerified, onCancel }) {
   const [code, setCode] = useState('');
@@ -36,7 +37,7 @@ export default function TwoFactorAuth({ email, onVerified, onCancel }) {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/verify-2fa', {
+      const res = await axios.post(`${API_BASE}/api/auth/verify-2fa`, {
         email,
         code,
         method
@@ -59,7 +60,7 @@ export default function TwoFactorAuth({ email, onVerified, onCancel }) {
     setResendTimer(30);
 
     try {
-      await axios.post(`http://localhost:5000/api/auth/resend-2fa`, {
+      await axios.post(`${API_BASE}/api/auth/resend-2fa`, {
         email,
         method
       }, {

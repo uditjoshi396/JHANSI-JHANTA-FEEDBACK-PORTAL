@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/Transparency.css';
+import { API_BASE } from '../config';
 
 function Transparency() {
   const [activities, setActivities] = useState([]);
@@ -23,23 +24,23 @@ function Transparency() {
   const fetchActivities = async () => {
     setLoading(true);
     try {
-      let url = 'http://localhost:5000/api/transparency/my-activities';
+      let url = `${API_BASE}/api/transparency/my-activities`;
       const params = new URLSearchParams();
 
       switch (filter.type) {
         case 'all':
-          url = 'http://localhost:5000/api/transparency/all';
+          url = `${API_BASE}/api/transparency/all`;
           if (filter.action) params.append('action', filter.action);
           if (filter.role) params.append('role', filter.role);
           if (filter.startDate) params.append('startDate', filter.startDate);
           if (filter.endDate) params.append('endDate', filter.endDate);
           break;
         case 'by-role':
-          url = `http://localhost:5000/api/transparency/role/${filter.role}`;
+          url = `${API_BASE}/api/transparency/role/${filter.role}`;
           if (filter.action) params.append('action', filter.action);
           break;
         case 'by-action':
-          url = `http://localhost:5000/api/transparency/by-action/${filter.action}`;
+          url = `${API_BASE}/api/transparency/by-action/${filter.action}`;
           break;
         default:
           break;
@@ -69,7 +70,7 @@ function Transparency() {
       if (filter.endDate) params.append('endDate', filter.endDate);
 
       const response = await axios.get(
-        `http://localhost:5000/api/transparency/stats/dashboard?${params}`,
+        `${API_BASE}/api/transparency/stats/dashboard?${params}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -91,7 +92,7 @@ function Transparency() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/transparency/grievance/${grievanceId}`,
+        `${API_BASE}/api/transparency/grievance/${grievanceId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

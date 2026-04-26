@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import './AutoGeneration.css';
+import { API_BASE } from '../config';
 
 const AutoGeneration = ({ authToken, apiUrl }) => {
   // State management

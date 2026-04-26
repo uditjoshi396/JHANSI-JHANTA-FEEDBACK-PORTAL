@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AccountGenerator.css";
+import { API_BASE } from '../config';
 
 const AccountGenerator = () => {
   const [activeTab, setActiveTab] = useState("single"); // single, bulk, view
@@ -32,7 +33,7 @@ const AccountGenerator = () => {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/admin/accounts",
+        `${API_BASE}/api/admin/accounts`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -65,7 +66,7 @@ const AccountGenerator = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/admin/generate-account",
+        `${API_BASE}/api/admin/generate-account`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -111,7 +112,7 @@ ${response.data.email.sent ? "✅ Credentials sent to " + formData.email : "⚠�
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/admin/generate-accounts-csv",
+        `${API_BASE}/api/admin/generate-accounts-csv`,
         { csvData, sendEmails: true },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -139,7 +140,7 @@ Emails Failed: ${response.data.summary.emailsFailed}
   const downloadTemplate = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/admin/accounts/template",
+        `${API_BASE}/api/admin/accounts/template`,
         { headers: { Authorization: `Bearer ${token}` } },
       );
 
@@ -160,7 +161,7 @@ Emails Failed: ${response.data.summary.emailsFailed}
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/admin/resend-credentials/${userId}`,
+        `${API_BASE}/api/admin/resend-credentials/${userId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } },
       );

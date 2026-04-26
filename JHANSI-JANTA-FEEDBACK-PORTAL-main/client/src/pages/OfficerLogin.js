@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/AdminAuth.css';
+import { API_BASE } from '../config';
 
 function OfficerLogin() {
   const [email, setEmail] = useState('');
@@ -31,7 +32,7 @@ function OfficerLogin() {
         return;
       }
 
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${API_BASE}/api/auth/login`, {
         email: email.toLowerCase(),
         password
       });

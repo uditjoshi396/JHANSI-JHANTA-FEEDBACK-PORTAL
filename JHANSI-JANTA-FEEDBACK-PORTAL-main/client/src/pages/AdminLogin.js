@@ -1,66 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
-import '../styles/AdminAuth.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import { API_BASE } from "../config";
+import "../styles/AdminAuth.css";
 
 function AdminLogin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     // Check if already logged in and is admin
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (token && user.role === 'admin') {
-      navigate('/admin');
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    if (token && user.role === "admin") {
+      navigate("/admin");
     }
   }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
       if (!email || !password) {
-        setError('Please fill in all fields');
+        setError("Please fill in all fields");
         setLoading(false);
         return;
       }
 
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${API_BASE}/api/auth/login`, {
         email: email.toLowerCase(),
-        password
+        password,
       });
 
-      if (response.data.user.role !== 'admin') {
-        setError('This account does not have admin privileges');
+      if (response.data.user.role !== "admin") {
+        setError("This account does not have admin privileges");
         setLoading(false);
         return;
       }
 
       // Store token and user info
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
       // Calculate expiry time (7 days)
       const expiryTime = Date.now() + 7 * 24 * 60 * 60 * 1000;
-      localStorage.setItem('tokenExpiry', expiryTime.toString());
+      localStorage.setItem("tokenExpiry", expiryTime.toString());
 
       // Redirect to admin dashboard
-      navigate('/admin');
+      navigate("/admin");
     } catch (err) {
-      console.error('Login error:', err);
+      console.error("Login error:", err);
       if (err.response?.data?.error) {
         setError(err.response.data.error);
       } else if (err.response?.status === 401) {
-        setError('Invalid credentials');
+        setError("Invalid credentials");
       } else {
-        setError('Login failed. Please try again.');
+        setError("Login failed. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -108,7 +109,7 @@ function AdminLogin() {
               <label htmlFor="password">Password</label>
               <div className="password-input-wrapper">
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -122,7 +123,7 @@ function AdminLogin() {
                   onClick={() => setShowPassword(!showPassword)}
                   tabIndex="-1"
                 >
-                  {showPassword ? '👁️‍🗨️' : '👁️'}
+                  {showPassword ? "👁️‍🗨️" : "👁️"}
                 </button>
               </div>
             </div>
@@ -150,7 +151,8 @@ function AdminLogin() {
           </div>
 
           <p className="auth-footer-text">
-            If you believe you should have admin access, contact your system administrator.
+            If you believe you should have admin access, contact your system
+            administrator.
           </p>
 
           <div className="auth-links">
@@ -162,7 +164,8 @@ function AdminLogin() {
           <div className="auth-info-box">
             <p className="info-title">⚡ Quick Access</p>
             <p className="info-text">
-              This page is for administrators only. If you don't have an admin account, please use the regular login.
+              This page is for administrators only. If you don't have an admin
+              account, please use the regular login.
             </p>
           </div>
         </div>
@@ -170,17 +173,25 @@ function AdminLogin() {
         <div className="auth-side-info">
           <div className="info-card">
             <h3>🛡️ Admin Dashboard</h3>
-            <p>Manage grievances, monitor statistics, and oversee all system operations</p>
+            <p>
+              Manage grievances, monitor statistics, and oversee all system
+              operations
+            </p>
           </div>
 
           <div className="info-card">
             <h3>🔐 Secure Access</h3>
-            <p>Enterprise-grade security with JWT authentication and role-based access control</p>
+            <p>
+              Enterprise-grade security with JWT authentication and role-based
+              access control
+            </p>
           </div>
 
           <div className="info-card">
             <h3>📊 Full Control</h3>
-            <p>Complete control over grievances, users, and system configuration</p>
+            <p>
+              Complete control over grievances, users, and system configuration
+            </p>
           </div>
         </div>
       </div>

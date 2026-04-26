@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Admin.css";
+import { API_BASE } from '../config';
 
 function Admin() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -48,14 +49,14 @@ function Admin() {
 
       // Fetch all grievances (admin view)
       const grievanceRes = await axios.get(
-        "http://localhost:5000/api/grievances/all",
+        `${API_BASE}/api/grievances/all`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
 
       // Fetch all users (admin view)
-      const usersRes = await axios.get("http://localhost:5000/api/users/all", {
+      const usersRes = await axios.get(`${API_BASE}/api/users/all`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log("Admin users API response:", usersRes.data);
@@ -114,7 +115,7 @@ function Admin() {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5000/api/grievances/${grievanceId}/status`,
+        `${API_BASE}/api/grievances/${grievanceId}/status`,
         {
           status: newStatus,
           response: responseText,
@@ -137,7 +138,7 @@ function Admin() {
       try {
         const token = localStorage.getItem("token");
         await axios.delete(
-          `http://localhost:5000/api/grievances/${grievanceId}`,
+          `${API_BASE}/api/grievances/${grievanceId}`,
           { headers: { Authorization: `Bearer ${token}` } },
         );
         fetchData();
@@ -152,7 +153,7 @@ function Admin() {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
         const token = localStorage.getItem("token");
-        await axios.delete(`http://localhost:5000/api/users/${userId}`, {
+        await axios.delete(`${API_BASE}/api/users/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         fetchData();

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE } from '../config';
 
 function Statistics() {
   const [stats, setStats] = useState(null);
@@ -20,7 +21,7 @@ function Statistics() {
         return;
       }
 
-      const response = await axios.get('http://localhost:5000/api/grievances/stats', {
+      const response = await axios.get(`${API_BASE}/api/grievances/stats`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setStats(response.data);

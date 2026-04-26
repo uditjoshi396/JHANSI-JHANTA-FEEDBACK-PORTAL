@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AIChatbot from "../components/AIChatbot";
+import { API_BASE } from '../config';
 
 function Dashboard() {
   const [grievances, setGrievances] = useState([]);
@@ -64,7 +65,7 @@ function Dashboard() {
       }
 
       const response = await axios.get(
-        "http://localhost:5000/api/grievances/my",
+        `${API_BASE}/api/grievances/my`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -239,7 +240,7 @@ function Dashboard() {
           payload.append("locationCapturedAt", location.capturedAt);
         }
       }
-      await axios.post("http://localhost:5000/api/grievances/create", payload, {
+      await axios.post(`${API_BASE}/api/grievances/create`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

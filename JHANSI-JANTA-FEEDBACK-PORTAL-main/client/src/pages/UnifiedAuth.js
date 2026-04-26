@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Logo from "../components/Logo";
 import "../styles/UnifiedAuth.css";
+import { API_BASE } from '../config';
 
 export default function UnifiedAuth() {
   const [currentMode, setCurrentMode] = useState("login"); // 'login' or 'register'
@@ -301,10 +302,10 @@ export default function UnifiedAuth() {
     try {
       const endpoint =
         selectedRole === "admin"
-          ? "http://localhost:5000/api/auth/admin-login"
+          ? `${API_BASE}/api/auth/admin-login`
           : selectedRole === "officer"
-            ? "http://localhost:5000/api/auth/officer-login"
-            : "http://localhost:5000/api/auth/login";
+            ? `${API_BASE}/api/auth/officer-login`
+            : `${API_BASE}/api/auth/login`;
 
       const response = await axios.post(endpoint, {
         email: sanitizeInput(loginForm.email.toLowerCase()),
@@ -366,7 +367,7 @@ export default function UnifiedAuth() {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${API_BASE}/api/auth/register`,
         registerData,
       );
 
@@ -526,7 +527,7 @@ export default function UnifiedAuth() {
                     type="button"
                     className="social-auth-btn google-btn"
                     onClick={() =>
-                      (window.location.href = "http://localhost:5000/api/auth/google")
+                      (window.location.href = `${API_BASE}/api/auth/google`)
                     }
                     disabled={loading || isLocked}
                   >
@@ -689,7 +690,7 @@ export default function UnifiedAuth() {
                     type="button"
                     className="social-auth-btn google-btn"
                     onClick={() =>
-                      (window.location.href = "http://localhost:5000/api/auth/google")
+                      (window.location.href = `${API_BASE}/api/auth/google`)
                     }
                     disabled={loading}
                   >

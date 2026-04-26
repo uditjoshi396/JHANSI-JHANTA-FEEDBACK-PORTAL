@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/AdminAuth.css';
+import { API_BASE } from '../config';
 
 function OfficerRegister() {
   const [formData, setFormData] = useState({
@@ -107,7 +108,7 @@ function OfficerRegister() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post(`${API_BASE}/api/auth/register`, {
         name: formData.name,
         email: formData.email.toLowerCase(),
         phone: formData.phone,

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Logo from '../components/Logo';
 import Toast from '../components/Toast';
+import { API_BASE } from '../config';
 
 export default function ForgotPassword() {
   const [step, setStep] = useState(1); // 1: Email, 2: Code, 3: Reset
@@ -102,7 +103,7 @@ export default function ForgotPassword() {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/auth/forgot-password', { email });
+      await axios.post(`${API_BASE}/api/auth/forgot-password`, { email });
       setToast({ message: 'Reset code sent to your email', type: 'success' });
       setStep(2);
       setResendTimer(30);
@@ -127,7 +128,7 @@ export default function ForgotPassword() {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/auth/verify-reset-code', { email, code });
+      await axios.post(`${API_BASE}/api/auth/verify-reset-code`, { email, code });
       setToast({ message: 'Code verified. Enter your new password', type: 'success' });
       setStep(3);
     } catch (err) {
@@ -160,7 +161,7 @@ export default function ForgotPassword() {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/auth/reset-password', {
+      await axios.post(`${API_BASE}/api/auth/reset-password`, {
         email,
         code,
         password
@@ -182,7 +183,7 @@ export default function ForgotPassword() {
     setResendTimer(30);
 
     try {
-      await axios.post('http://localhost:5000/api/auth/forgot-password', { email });
+      await axios.post(`${API_BASE}/api/auth/forgot-password`, { email });
       setToast({ message: 'Reset code resent to your email', type: 'success' });
       setCode('');
     } catch (err) {
